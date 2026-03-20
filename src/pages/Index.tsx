@@ -1,7 +1,6 @@
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
-import About from '../components/About';
 import Testimonials from '../components/Testimonials';
 import Portfolio from '../components/Portfolio';
 import Contact from '../components/Contact';
@@ -15,7 +14,6 @@ export default function Index() {
       <main>
         <Hero />
         <Services />
-        <About />
         <Testimonials />
         <Portfolio />
         <Contact />
@@ -25,7 +23,7 @@ export default function Index() {
       <a
         href="#hero"
         className="fixed right-5 bottom-6 z-50 w-11 h-11 rounded-full bg-primary text-primary-foreground shadow-lift flex items-center justify-center hover:shadow-lift-lg transition-shadow"
-        aria-label="Voltar ao topo"
+        aria-label="Back to top"
       >
         <ArrowUp size={18} />
       </a>

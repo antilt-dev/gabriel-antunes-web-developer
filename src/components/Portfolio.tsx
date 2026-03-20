@@ -8,8 +8,8 @@ const ITEMS = [
   { id: 'p2', title: 'Design System', label: 'UI/UX', color: 'from-accent to-secondary' },
   { id: 'p3', title: 'Payment Gateway', label: 'API', color: 'from-secondary to-primary' },
   { id: 'p4', title: 'Dashboard Analytics', label: 'Performance', color: 'from-primary/80 to-accent' },
-  { id: 'p5', title: 'Healthcare Portal', label: 'Acessibilidade', color: 'from-accent to-primary' },
-  { id: 'p6', title: 'Code Audit Tool', label: 'Consultoria', color: 'from-secondary to-accent' },
+  { id: 'p5', title: 'Healthcare Portal', label: 'Accessibility', color: 'from-accent to-primary' },
+  { id: 'p6', title: 'Code Audit Tool', label: 'Consulting', color: 'from-secondary to-accent' },
 ];
 
 export default function Portfolio() {
@@ -29,7 +29,7 @@ export default function Portfolio() {
           Portfolio
         </motion.h2>
         <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-2 text-muted-foreground">
-          Alguns projetos recentes que demonstram minha abordagem.
+          A selection of recent projects showcasing my approach.
         </motion.p>
 
         <motion.div
@@ -56,7 +56,7 @@ export default function Portfolio() {
                 </div>
               </div>
               <div className="p-4 flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Ver detalhes</span>
+                <span className="text-sm text-muted-foreground">View details</span>
                 <ExternalLink size={14} className="text-muted-foreground group-hover:text-primary transition-colors" />
               </div>
             </motion.article>
@@ -84,13 +84,13 @@ export default function Portfolio() {
               >
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="font-semibold text-foreground text-lg">{selectedItem.title}</h3>
-                  <button onClick={() => setLightbox(null)} className="p-1 rounded-md hover:bg-muted transition-colors" aria-label="Fechar">
+                  <button onClick={() => setLightbox(null)} className="p-1 rounded-md hover:bg-muted transition-colors" aria-label="Close">
                     <X size={18} />
                   </button>
                 </div>
                 <div className={`h-48 rounded-lg bg-gradient-to-br ${selectedItem.color}`} />
                 <p className="mt-4 text-sm text-muted-foreground">
-                  Projeto desenvolvido com React, TypeScript e Tailwind CSS. Foco em performance, acessibilidade e experiência do usuário.
+                  Built with React, TypeScript, and Tailwind CSS. Focus on performance, accessibility, and user experience.
                 </p>
               </motion.div>
             </motion.div>
