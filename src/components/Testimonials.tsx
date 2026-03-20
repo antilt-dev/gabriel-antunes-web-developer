@@ -3,9 +3,9 @@ import { fadeUp } from '../lib/animations';
 import { Quote } from 'lucide-react';
 
 const TESTIMONIALS = [
-  { id: 1, quote: 'Entregou uma aplicação robusta no prazo. Comunicação excelente.', name: 'Ana P.', role: 'Product Manager' },
-  { id: 2, quote: 'Melhorias de performance reduziram o tempo de carregamento pela metade.', name: 'Lucas M.', role: 'CTO' },
-  { id: 3, quote: 'Código limpo e acessível. Altamente recomendado.', name: 'Mariana R.', role: 'Founder' },
+  { id: 1, quote: 'Delivered a robust app on time. Excellent communication.', name: 'Ana P.', role: 'Product Manager' },
+  { id: 2, quote: 'Performance improvements cut load times in half.', name: 'Lucas M.', role: 'CTO' },
+  { id: 3, quote: 'Clean, accessible code. Highly recommended.', name: 'Mariana R.', role: 'Founder' },
 ];
 
 export default function Testimonials() {
@@ -13,7 +13,7 @@ export default function Testimonials() {
     <section id="testimonials" className="section-padding bg-muted">
       <div className="max-w-5xl mx-auto px-6">
         <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} className="font-heading font-bold text-foreground">
-          O que Dizem os Clientes
+          What Clients Say
         </motion.h2>
 
         <motion.div

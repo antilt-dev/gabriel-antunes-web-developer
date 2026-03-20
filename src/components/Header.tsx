@@ -1,16 +1,38 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const NAV_LINKS = [
-  { label: 'Serviços', href: '#services' },
+  { label: 'Services', href: '#services' },
   { label: 'Portfolio', href: '#portfolio' },
-  { label: 'Sobre', href: '#about' },
-  { label: 'Contato', href: '#contact' },
+  { label: 'Testimonials', href: '#testimonials' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [dark, setDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.classList.contains('dark');
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, [dark]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setDark(true);
+    }
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
@@ -29,18 +51,34 @@ export default function Header() {
               {l.label}
             </a>
           ))}
+          <button
+            onClick={() => setDark(!dark)}
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-label="Toggle theme"
+          >
+            {dark ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
           <a href="#contact" className="btn-primary text-sm !px-4 !py-2">
-            Agendar Consulta
+            Book a Call
           </a>
         </nav>
 
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden p-2 rounded-md hover:bg-muted transition-colors"
-          aria-label="Menu"
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={() => setDark(!dark)}
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-label="Toggle theme"
+          >
+            {dark ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <button
+            onClick={() => setOpen(!open)}
+            className="p-2 rounded-md hover:bg-muted transition-colors"
+            aria-label="Menu"
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -64,7 +102,7 @@ export default function Header() {
                 </a>
               ))}
               <a href="#contact" onClick={() => setOpen(false)} className="btn-primary text-center mt-2">
-                Agendar Consulta
+                Book a Call
               </a>
             </div>
           </motion.nav>

@@ -1,14 +1,40 @@
 import { motion } from 'framer-motion';
 import { fadeUp } from '../lib/animations';
 import { ArrowRight, Github, Linkedin } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+function useTypingEffect(text: string, speed = 80, delay = 0) {
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    setDisplayed('');
+    setDone(false);
+    const timeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        i++;
+        setDisplayed(text.slice(0, i));
+        if (i >= text.length) {
+          clearInterval(interval);
+          setDone(true);
+        }
+      }, speed);
+      return () => clearInterval(interval);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [text, speed, delay]);
+
+  return { displayed, done };
+}
 
 export default function Hero() {
+  const name = useTypingEffect('Gabriel Antunes', 70, 400);
+  const title = useTypingEffect('Web Developer', 70, 1600);
+
   return (
     <section id="hero" className="relative min-h-[85vh] flex items-center overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-secondary" />
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary to-accent/20" />
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 w-full">
         <motion.div
@@ -19,27 +45,29 @@ export default function Hero() {
         >
           <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-primary-foreground/90 text-sm font-medium mb-6">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            Disponível para novos projetos
+            Available for new projects
           </motion.div>
 
           <motion.h1 variants={fadeUp} className="font-heading font-extrabold text-primary-foreground leading-tight">
-            Gabriel Antunes
+            {name.displayed}
+            <span className={`inline-block w-[3px] h-[0.85em] bg-accent ml-1 align-middle ${name.done ? 'animate-pulse' : ''}`} />
             <span className="block text-accent mt-1" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }}>
-              Web Developer
+              {title.displayed}
+              {name.done && <span className={`inline-block w-[2px] h-[0.85em] bg-accent/70 ml-1 align-middle ${title.done ? 'animate-pulse' : ''}`} />}
             </span>
           </motion.h1>
 
           <motion.p variants={fadeUp} className="mt-5 text-primary-foreground/80 max-w-xl text-lg leading-relaxed">
-            Aplicações web rápidas, acessíveis e prontas para produção.
-            React, TypeScript, Tailwind e arquitetura focada em performance.
+            Fast, accessible, production-ready web applications.
+            React, TypeScript, Tailwind, and performance-first architecture.
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4">
             <a href="#contact" className="btn-primary !bg-accent !text-secondary font-bold">
-              Consulta Gratuita <ArrowRight size={16} />
+              Free Consultation <ArrowRight size={16} />
             </a>
             <a href="#portfolio" className="btn-ghost !border-primary-foreground/20 !text-primary-foreground hover:!bg-primary-foreground/10">
-              Ver Portfolio
+              View Portfolio
             </a>
           </motion.div>
 

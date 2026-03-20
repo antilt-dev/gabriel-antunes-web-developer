@@ -8,15 +8,15 @@ export default function Footer() {
           <div className="font-heading font-bold text-lg">Gabriel Antunes</div>
           <div className="text-sm text-secondary-foreground/70 mt-1">Web Developer · Porto Alegre, RS</div>
           <div className="text-xs text-secondary-foreground/50 mt-3">
-            © {new Date().getFullYear()} Gabriel Antunes. Todos os direitos reservados.
+            © {new Date().getFullYear()} Gabriel Antunes. All rights reserved.
           </div>
         </div>
 
         <nav className="flex gap-5 text-sm text-secondary-foreground/80">
-          <a href="#services" className="hover:text-secondary-foreground transition-colors">Serviços</a>
+          <a href="#services" className="hover:text-secondary-foreground transition-colors">Services</a>
           <a href="#portfolio" className="hover:text-secondary-foreground transition-colors">Portfolio</a>
-          <a href="#about" className="hover:text-secondary-foreground transition-colors">Sobre</a>
-          <a href="#contact" className="hover:text-secondary-foreground transition-colors">Contato</a>
+          <a href="#testimonials" className="hover:text-secondary-foreground transition-colors">Testimonials</a>
+          <a href="#contact" className="hover:text-secondary-foreground transition-colors">Contact</a>
         </nav>
 
         <div className="flex gap-3">
