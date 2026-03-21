@@ -66,9 +66,6 @@ export default function Hero() {
             <a href="#contact" className="btn-primary !bg-accent !text-secondary font-bold">
               Free Consultation <ArrowRight size={16} />
             </a>
-            <a href="#portfolio" className="btn-ghost !border-primary-foreground/20 !text-primary-foreground hover:!bg-primary-foreground/10">
-              View Portfolio
-            </a>
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-8 flex gap-4">

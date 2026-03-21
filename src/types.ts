@@ -9,7 +9,6 @@ export type ContactForm = {
   name: string;
   email: string;
   phone: string;
-  service: string;
-  date?: string;
+  country: string
   message?: string;
 };
