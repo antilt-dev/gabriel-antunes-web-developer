@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const NAV_LINKS = [
-  { label: 'Services', href: '#services' },
-  { label: 'Portfolio', href: '#portfolio' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Contact', href: '#contact' },
-];
+import { useLanguage } from '../hooks/useLanguage';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+  const { lang, t } = useLanguage();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -34,6 +31,21 @@ export default function Header() {
     }
   }, []);
 
+  function toggleLang() {
+    if (lang === 'en') {
+      navigate('/pt-br');
+    } else {
+      navigate('/');
+    }
+  }
+
+  const NAV_LINKS = [
+    { label: t.nav.services, href: '#services' },
+    { label: t.nav.portfolio, href: '#portfolio' },
+    { label: t.nav.testimonials, href: '#testimonials' },
+    { label: t.nav.contact, href: '#contact' },
+  ];
+
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -52,6 +64,14 @@ export default function Header() {
             </a>
           ))}
           <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+            aria-label="Toggle language"
+          >
+            <Globe size={16} />
+            <span className="text-xs font-semibold uppercase">{lang === 'en' ? 'PT' : 'EN'}</span>
+          </button>
+          <button
             onClick={() => setDark(!dark)}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
             aria-label="Toggle theme"
@@ -59,11 +79,19 @@ export default function Header() {
             {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <a href="#contact" className="btn-primary text-sm !px-4 !py-2">
-            Book a Call
+            {t.nav.bookCall}
           </a>
         </nav>
 
         <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1 px-2 py-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground"
+            aria-label="Toggle language"
+          >
+            <Globe size={16} />
+            <span className="text-xs font-semibold uppercase">{lang === 'en' ? 'PT' : 'EN'}</span>
+          </button>
           <button
             onClick={() => setDark(!dark)}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
@@ -102,7 +130,7 @@ export default function Header() {
                 </a>
               ))}
               <a href="#contact" onClick={() => setOpen(false)} className="btn-primary text-center mt-2">
-                Book a Call
+                {t.nav.bookCall}
               </a>
             </div>
           </motion.nav>

@@ -1,22 +1,25 @@
 import { Github, Linkedin } from 'lucide-react';
+import { useLanguage } from '../hooks/useLanguage';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-secondary text-secondary-foreground">
       <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-start gap-8">
         <div>
           <div className="font-heading font-bold text-lg">Gabriel Antunes</div>
-          <div className="text-sm text-secondary-foreground/70 mt-1">Web Developer · Porto Alegre, RS</div>
+          <div className="text-sm text-secondary-foreground/70 mt-1">{t.footer.role}</div>
           <div className="text-xs text-secondary-foreground/50 mt-3">
-            © {new Date().getFullYear()} Gabriel Antunes. All rights reserved.
+            © {new Date().getFullYear()} Gabriel Antunes. {t.footer.rights}
           </div>
         </div>
 
         <nav className="flex gap-5 text-sm text-secondary-foreground/80">
-          <a href="#services" className="hover:text-secondary-foreground transition-colors">Services</a>
-          <a href="#portfolio" className="hover:text-secondary-foreground transition-colors">Portfolio</a>
-          <a href="#testimonials" className="hover:text-secondary-foreground transition-colors">Testimonials</a>
-          <a href="#contact" className="hover:text-secondary-foreground transition-colors">Contact</a>
+          <a href="#services" className="hover:text-secondary-foreground transition-colors">{t.nav.services}</a>
+          <a href="#portfolio" className="hover:text-secondary-foreground transition-colors">{t.nav.portfolio}</a>
+          <a href="#testimonials" className="hover:text-secondary-foreground transition-colors">{t.nav.testimonials}</a>
+          <a href="#contact" className="hover:text-secondary-foreground transition-colors">{t.nav.contact}</a>
         </nav>
 
         <div className="flex gap-3">
