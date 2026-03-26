@@ -2,44 +2,34 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeUp } from '../lib/animations';
 import { X, ExternalLink } from 'lucide-react';
+import { useLanguage } from '../hooks/useLanguage';
 
-const ITEMS = [
-  { id: 'p1', title: 'E-commerce Platform', label: 'Web App', color: 'from-primary to-secondary' },
-  { id: 'p2', title: 'Design System', label: 'UI/UX', color: 'from-accent to-secondary' },
-  { id: 'p3', title: 'Payment Gateway', label: 'API', color: 'from-secondary to-primary' },
-  { id: 'p4', title: 'Dashboard Analytics', label: 'Performance', color: 'from-primary/80 to-accent' },
-  { id: 'p5', title: 'Healthcare Portal', label: 'Accessibility', color: 'from-accent to-primary' },
-  { id: 'p6', title: 'Code Audit Tool', label: 'Consulting', color: 'from-secondary to-accent' },
-];
+const COLORS: Record<string, string> = {
+  p1: 'from-primary to-secondary',
+  p2: 'from-accent to-secondary',
+  p3: 'from-secondary to-primary',
+  p4: 'from-primary/80 to-accent',
+  p5: 'from-accent to-primary',
+  p6: 'from-secondary to-accent',
+};
 
 export default function Portfolio() {
+  const { t } = useLanguage();
   const [lightbox, setLightbox] = useState<string | null>(null);
-  const selectedItem = ITEMS.find((i) => i.id === lightbox);
+  const selectedItem = t.portfolio.items.find((i) => i.id === lightbox);
 
   return (
     <section id="portfolio" className="section-padding">
       <div className="max-w-6xl mx-auto px-6">
-        <motion.h2
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeUp}
-          className="font-heading font-bold text-foreground"
-        >
-          Portfolio
+        <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} className="font-heading font-bold text-foreground">
+          {t.portfolio.title}
         </motion.h2>
         <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-2 text-muted-foreground">
-          A selection of recent projects showcasing my approach.
+          {t.portfolio.subtitle}
         </motion.p>
 
-        <motion.div
-          className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-        >
-          {ITEMS.map((item) => (
+        <motion.div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }}>
+          {t.portfolio.items.map((item) => (
             <motion.article
               key={item.id}
               variants={fadeUp}
@@ -49,14 +39,14 @@ export default function Portfolio() {
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && setLightbox(item.id)}
             >
-              <div className={`h-44 bg-gradient-to-br ${item.color} flex items-end p-5`}>
+              <div className={`h-44 bg-gradient-to-br ${COLORS[item.id] || 'from-primary to-secondary'} flex items-end p-5`}>
                 <div>
                   <div className="font-semibold text-primary-foreground">{item.title}</div>
                   <div className="text-xs text-primary-foreground/80 mt-0.5">{item.label}</div>
                 </div>
               </div>
               <div className="p-4 flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">View details</span>
+                <span className="text-sm text-muted-foreground">{t.portfolio.viewDetails}</span>
                 <ExternalLink size={14} className="text-muted-foreground group-hover:text-primary transition-colors" />
               </div>
             </motion.article>
@@ -88,9 +78,9 @@ export default function Portfolio() {
                     <X size={18} />
                   </button>
                 </div>
-                <div className={`h-48 rounded-lg bg-gradient-to-br ${selectedItem.color}`} />
+                <div className={`h-48 rounded-lg bg-gradient-to-br ${COLORS[selectedItem.id] || 'from-primary to-secondary'}`} />
                 <p className="mt-4 text-sm text-muted-foreground">
-                  Built with React, TypeScript, and Tailwind CSS. Focus on performance, accessibility, and user experience.
+                  {t.portfolio.projectDesc}
                 </p>
               </motion.div>
             </motion.div>
