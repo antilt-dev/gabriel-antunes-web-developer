@@ -3,6 +3,8 @@ import { Menu, X, Sun, Moon, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../hooks/useLanguage';
 import { useNavigate } from 'react-router-dom';
+import logoLight from '../assests/new-logo-light.png';
+import logoDark from '../assests/new-logo-dark.png'
 
 export default function Header() {
   const { lang, t } = useLanguage();
@@ -47,10 +49,14 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-40 backdrop-blur-md border-b border-border">
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-        <a href="#hero" className="font-heading font-extrabold text-foreground text-lg tracking-tight">
-          Gabriel Antunes
+        <a href="#hero" className="tracking-tight">
+          <img 
+          src={dark ? logoDark : logoLight} 
+          alt="logo antunes dev" 
+          className="max-w-52 h-auto"
+          />
         </a>
 
         <nav className="hidden md:flex gap-6 items-center text-sm font-medium">
@@ -76,7 +82,7 @@ export default function Header() {
             className="p-2 rounded-lg hover:bg-muted transition-colors"
             aria-label="Toggle theme"
           >
-            {dark ? <Sun size={18} /> : <Moon size={18} />}
+            {dark ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <a href="#contact" className="btn-primary text-sm !px-4 !py-2">
             {t.nav.bookCall}

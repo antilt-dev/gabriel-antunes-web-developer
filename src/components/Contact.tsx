@@ -12,20 +12,39 @@ export default function Contact() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus('loading');
+
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setStatus('success');
-        setForm({ name: '', email: '', phone: '', country: '', message: '' });
-      } else setStatus('error');
-    } catch {
+      // Configuração do SEU número (destino)
+      const myPhoneNumber = "5551991320224"; 
+      
+      // Montagem da mensagem formatada para o seu WhatsApp
+      const messageText = `*Novo Contato via Portfólio* 
+      
+*Nome:* ${form.name}
+*E-mail:* ${form.email}
+*Telefone:* ${form.phone || 'Não informado'}
+*Localização:* ${form.country || 'Não informado'}
+
+*Mensagem:*
+${form.message}`;
+
+      // Codificação da URL
+      const encodedText = encodeURIComponent(messageText);
+      const whatsappUrl = `https://wa.me/${myPhoneNumber}?text=${encodedText}`;
+
+      // Abre o WhatsApp (Web ou App) em nova aba
+      window.open(whatsappUrl, '_blank');
+      
+      setStatus('success');
+      
+      // Reseta o status após 3 segundos
+      setTimeout(() => setStatus('idle'), 3000);
+      
+    } catch (err) {
+      console.error(err);
       setStatus('error');
     }
   }
@@ -35,7 +54,13 @@ export default function Contact() {
   return (
     <section id="contact" className="section-padding bg-muted">
       <div className="max-w-6xl mx-auto px-6">
-        <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} className="font-heading font-bold text-foreground">
+        <motion.h2 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, amount: 0.2 }} 
+          variants={fadeUp} 
+          className="font-heading font-bold text-foreground text-center md:text-left"
+        >
           {t.contact.title}
         </motion.h2>
 
@@ -73,14 +98,14 @@ export default function Contact() {
 
             <motion.div variants={fadeUp} className="block">
               <label className="text-sm font-medium text-foreground">{t.contact.message}</label>
-              <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={inputClass} rows={4} placeholder={t.contact.messagePlaceholder} maxLength={1000} />
+              <textarea required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={inputClass} rows={4} placeholder={t.contact.messagePlaceholder} maxLength={1000} />
             </motion.div>
 
             <motion.div variants={fadeUp} className="flex items-center gap-4">
               <button type="submit" className="btn-primary" disabled={status === 'loading'}>
                 <Send size={16} /> {status === 'loading' ? t.contact.sending : t.contact.send}
               </button>
-              {status === 'success' && <span className="text-sm text-accent font-medium">{t.contact.success}</span>}
+              {status === 'success' && <span className="text-sm text-green-600 font-medium">Redirecionando para o WhatsApp...</span>}
               {status === 'error' && <span className="text-sm text-destructive font-medium">{t.contact.error}</span>}
             </motion.div>
 
@@ -89,9 +114,15 @@ export default function Contact() {
             </motion.p>
           </motion.form>
 
-          <motion.aside initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="md:col-span-2 bg-card p-6 rounded-lg shadow-lift border border-border h-fit">
+          <motion.aside 
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true }} 
+            variants={fadeUp} 
+            className="md:col-span-2 bg-card p-6 rounded-lg shadow-lift border border-border h-fit"
+          >
             <h3 className="font-semibold text-foreground">{t.contact.contactInfo}</h3>
-            <div className="mt-4 space-y-3 text-sm text-muted-foreground">
+            <div className="mt-4 space-y-4 text-sm text-muted-foreground">
               <div className="flex items-start gap-3">
                 <MapPin size={16} className="text-primary mt-0.5 shrink-0" />
                 <span>Porto Alegre, RS, Brazil</span>
